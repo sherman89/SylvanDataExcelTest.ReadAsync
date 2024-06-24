@@ -8,13 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sylvan.Data" Version="0.2.14" />
-    <PackageReference Include="Sylvan.Data.Excel" Version="0.4.23" />
+    <PackageReference Include="Sylvan.Data" Version="0.2.15" />
+    <PackageReference Include="Sylvan.Data.Excel" Version="0.4.24" />
     <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="TestData\Data_ENG.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\EmptySheet.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\OnlyOneColumn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

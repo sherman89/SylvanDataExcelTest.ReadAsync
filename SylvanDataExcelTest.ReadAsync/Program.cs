@@ -5,20 +5,51 @@ namespace SylvanDataExcelTest.ReadAsync
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            await using var edr = await ExcelDataReader.CreateAsync("TestData/Data_ENG.xlsx");
+            using var edr = ExcelDataReader.Create("TestData/EmptySheet.xlsx");
 
-            var reader = edr.Validate(context => true);
+            // var reader = edr.Validate(context => true);
 
-            var results = reader.GetRecords<UserRecord>().ToList();
+            Console.WriteLine("No columns:");
 
-            // Comment GetRecords above, uncomment below, observe how array with default values is produced
-            // var results = await reader.GetRecordsAsync<UserRecord>().ToListAsync();
-
-            foreach (var userRecord in results)
+            try
             {
-                Console.WriteLine($"Id: {userRecord.Id}");
+                var results = edr.GetRecords<UserRecord>(new DataBinderOptions { BindingMode = DataBindingMode.Any }).ToList();
+
+                foreach (var userRecord in results)
+                {
+                    Console.WriteLine($"Age: {userRecord.Age}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("One column:");
+            Works();
+        }
+
+        private static void Works()
+        {
+            using var edr = ExcelDataReader.Create("TestData/OnlyOneColumn.xlsx");
+
+            // var reader = edr.Validate(context => true);
+
+            try
+            {
+                var results = edr.GetRecords<UserRecord>(new DataBinderOptions { BindingMode = DataBindingMode.Any }).ToList();
+
+                foreach (var userRecord in results)
+                {
+                    Console.WriteLine($"Age: {userRecord.Age}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
